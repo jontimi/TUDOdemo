@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple 3D AR Webpage Addon Template</title>
+    <link rel="stylesheet" href="style.css">
+    <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.4.0/model-viewer.min.js"></script>
+</head>
+<body>
+
+    <h1>Simple 3D AR Model Viewer Template</h1>
+    <p>This page demonstrates a single, embeddable 3D AR model viewer. This is the kind of code snippet you can provide to clients for their individual product pages.</p>
+    <p>Replace the `src` and `poster` attributes with your client's specific GLB file and preview image URLs.</p>
+
+    <div class="product-3d-viewer-container">
+        <model-viewer
+            src="models/cube.glb"  
+            poster="poster.png"
+            alt="3D model of an example cube"
+            ar
+            ar-modes="webxr scene-viewer quick-look"
+            camera-controls
+            shadow-intensity="1"
+            exposure="1"
+            environment-image="neutral"
+            bounds="tight"
+            min-field-of-view="40deg"
+            max-field-of-view="40deg">
+        </model-viewer>
+    </div>
+    </body>
+</html>

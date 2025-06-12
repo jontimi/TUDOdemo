@@ -32,13 +32,20 @@
     <div class="controls-below-viewer">
         <button id="reset-view-button" class="action-button">Reset 3D View</button>
 
-        <p id="model-dimensions" class="dimensions-text">Dimensions: Loading...</p>
+        <button id="ar-qr-button" class="action-button">AR QR</button>
 
-        <div class="qr-code-wrapper">
-            <a id="qr-code-link" href="#" target="_blank" title="Scan to view in AR">
-                <img id="qr-code-image" src="" alt="QR Code" style="display: none;">
-                <span class="qr-text">Scan with phone for AR</span>
-            </a>
+        <p id="model-dimensions" class="dimensions-text">Dimensions: Loading...</p>
+    </div>
+
+    <div id="qr-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-button" id="close-qr-modal">&times;</span>
+            <div class="qr-code-wrapper">
+                <a id="qr-code-link" href="#" target="_blank" title="Scan to view in AR">
+                    <img id="qr-code-image" src="" alt="QR Code">
+                </a>
+            </div>
+            <p>Scan this QR code with your phone to open the 3D model directly in Augmented Reality.</p>
         </div>
     </div>
 

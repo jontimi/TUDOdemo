@@ -16,6 +16,17 @@ p {
     line-height: 1.6;
 }
 
+/* Dimensions Text (Now styled for above viewer) */
+.dimensions-text {
+    font-size: 1.1em;
+    font-weight: bold;
+    color: #555;
+    margin: 10px auto 20px auto; /* Adjust margin for spacing above viewer */
+    text-align: center;
+    max-width: 600px; /* To prevent it from stretching too wide */
+}
+
+
 /* Styling for the 3D AR Model Viewer Container */
 .product-3d-viewer-container {
     width: 100%;
@@ -34,14 +45,15 @@ p {
     height: 100%;
 }
 
-/* Styles for new elements below the viewer */
+/* Styles for buttons below the viewer */
 .controls-below-viewer {
     margin-top: 20px;
-    display: flex;
+    display: flex; /* Make it a flex container */
     flex-wrap: wrap; /* Allow buttons to wrap on smaller screens */
-    justify-content: center; /* Center buttons horizontally */
-    align-items: center; /* Vertically align items if they wrap */
+    justify-content: center; /* CENTER BUTTONS HORIZONTALLY */
+    align-items: center; /* Vertically align items */
     gap: 15px; /* Space between elements */
+    padding-bottom: 20px; /* Add some padding below buttons */
 }
 
 .action-button {
@@ -57,15 +69,6 @@ p {
 
 .action-button:hover {
     background-color: #0056b3;
-}
-
-.dimensions-text {
-    font-size: 1.1em;
-    font-weight: bold;
-    color: #555;
-    margin: 0; /* Reset default paragraph margin */
-    flex-basis: 100%; /* Make dimensions take full width if needed */
-    text-align: center;
 }
 
 /* Modal (Pop-up) Styles */
@@ -129,9 +132,4 @@ p {
     width: 100%; /* Make image fill its container */
     height: 100%;
     display: block; /* Remove extra space below image */
-}
-
-.qr-code-wrapper .qr-text {
-    /* This text is now part of the general paragraph below the QR code, not inside the wrapper */
-    display: none; 
 }

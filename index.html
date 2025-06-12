@@ -6,6 +6,7 @@
     <title>Simple 3D AR Webpage Addon Template</title>
     <link rel="stylesheet" href="style.css">
     <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.4.0/model-viewer.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/qrious@4.0.2/dist/qrious.min.js"></script>
 </head>
 <body>
 
@@ -15,6 +16,7 @@
 
     <div class="product-3d-viewer-container">
         <model-viewer
+            id="ar-model-viewer"
             src="models/HiveShelf90cm.glb"  
             poster="poster.png"
             alt="3D model of a Hive Shelf 90cm"
@@ -24,9 +26,23 @@
             shadow-intensity="1"
             exposure="1"
             environment-image="neutral"
-            bounds="tight"
-            >
+            bounds="tight">
         </model-viewer>
     </div>
-    </body>
+    <div class="controls-below-viewer">
+        <button id="reset-view-button" class="action-button">Reset 3D View</button>
+
+        <p id="model-dimensions" class="dimensions-text">Dimensions: Loading...</p>
+
+        <div class="qr-code-wrapper">
+            <a id="qr-code-link" href="#" target="_blank" title="Scan to view in AR">
+                <img id="qr-code-image" src="" alt="QR Code" style="display: none;">
+                <span class="qr-text">Scan with phone for AR</span>
+            </a>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+
+</body>
 </html>

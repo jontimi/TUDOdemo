@@ -32,5 +32,56 @@ p {
 .product-3d-viewer-container model-viewer {
     width: 100%;
     height: 100%;
-    /* model-viewer automatically handles responsive sizing within its parent */
+}
+
+/* Styles for new elements below the viewer */
+.controls-below-viewer {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column; /* Stack elements vertically */
+    align-items: center; /* Center horizontally */
+    gap: 15px; /* Space between elements */
+}
+
+.action-button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
+
+.action-button:hover {
+    background-color: #0056b3;
+}
+
+.dimensions-text {
+    font-size: 1.1em;
+    font-weight: bold;
+    color: #555;
+    margin: 0; /* Reset default paragraph margin */
+}
+
+.qr-code-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    text-decoration: none; /* Remove underline from link */
+    color: #007bff;
+}
+
+.qr-code-wrapper img {
+    width: 100px; /* Size of the QR code image */
+    height: 100px;
+    border: 1px solid #eee;
+    border-radius: 4px;
+}
+
+.qr-code-wrapper .qr-text {
+    font-size: 0.9em;
+    color: #666;
 }

@@ -1,6 +1,8 @@
 // Get references to elements
 const modelViewer = document.getElementById("ar-model-viewer");
-const dimensionsText = document.getElementById("model-dimensions");
+const dimensionsTextElement = document.getElementById("model-dimensions"); // Get the P tag for dimensions
+const annotationButton = modelViewer.querySelector('button[slot="hotspot-dimensions"]'); // Get the annotation button
+
 const resetButton = document.getElementById("reset-view-button");
 const arQrButton = document.getElementById("ar-qr-button"); 
 const qrModal = document.getElementById("qr-modal");       
@@ -8,41 +10,21 @@ const closeQrModal = document.getElementById("close-qr-modal");
 const qrCodeLink = document.getElementById("qr-code-link");
 const qrCodeImage = document.getElementById("qr-code-image");
 
-// --- Feature: Display Dimensions ---
-function updateDimensions() {
-    console.log("Attempting to update dimensions...");
-    if (modelViewer && modelViewer.model) {
-        console.log("ModelViewer and model object available.");
-        if (modelViewer.model.boundingBox) {
-            console.log("Bounding box found! Calculating dimensions.");
-            const bbox = modelViewer.model.boundingBox.size;
-            
-            // Convert from meters (model-viewer default) to millimeters (mm)
-            // Round to whole numbers as millimeters are often integers
-            // model-viewer typically reports: bbox.x = width, bbox.y = height, bbox.z = depth
-            const width = (bbox.x * 1000).toFixed(0); 
-            const height = (bbox.y * 1000).toFixed(0);
-            const depth = (bbox.z * 1000).toFixed(0);
-            
-            dimensionsText.textContent = `Dimensions: W ${width}mm x H ${height}mm x D ${depth}mm`;
-            
-            console.log(`Model dimensions calculated: W ${width}mm x H ${height}mm x D ${depth}mm`);
-        } else {
-            dimensionsText.textContent = "Dimensions: Bounding box not available yet...";
-            console.warn("Model loaded, but boundingBox is not yet available. Retrying shortly...");
-            // Retry after a small delay if boundingBox isn't immediately available
-            setTimeout(updateDimensions, 200); // Retry after 200ms
-        }
+// --- Feature: Set Annotation Dimensions ---
+function setAnnotationDimensions() {
+    if (dimensionsTextElement && annotationButton) {
+        const dimensions = dimensionsTextElement.textContent;
+        annotationButton.setAttribute('data-label', dimensions);
+        console.log("Annotation dimensions set to:", dimensions);
     } else {
-        dimensionsText.textContent = "Dimensions: Loading...";
-        console.log("ModelViewer or model object not available yet.");
+        console.warn("Could not set annotation dimensions: 'model-dimensions' p tag or annotation button not found.");
     }
 }
 
-// Listen for the model to load to get its dimensions
-modelViewer.addEventListener("model-load", updateDimensions);
-// Initial call on DOMContentLoaded in case model loads very fast or is cached
-document.addEventListener("DOMContentLoaded", updateDimensions);
+// Set annotation dimensions when the DOM is loaded
+document.addEventListener("DOMContentLoaded", setAnnotationDimensions);
+// Also set them when the model loads, in case there's a timing issue
+modelViewer.addEventListener("model-load", setAnnotationDimensions);
 
 
 // --- Feature: Reset 3D View ---
@@ -107,6 +89,7 @@ if (qrModal) {
 }
 
 // Generate QR code when model loads (it will be hidden until button press)
+// This listener remains for the QR code functionality
 modelViewer.addEventListener("model-load", generateQRCode);
 // Also try to generate on initial DOM content load for robustness
 document.addEventListener("DOMContentLoaded", generateQRCode);

@@ -1,31 +1,12 @@
 // Get references to elements
 const modelViewer = document.getElementById("ar-model-viewer");
-const dimensionsTextElement = document.getElementById("model-dimensions"); // Get the P tag for dimensions
-const annotationButton = modelViewer.querySelector('button[slot="hotspot-dimensions"]'); // Get the annotation button
-
+// Removed dimensionsTextElement and annotationButton references
 const resetButton = document.getElementById("reset-view-button");
 const arQrButton = document.getElementById("ar-qr-button"); 
 const qrModal = document.getElementById("qr-modal");       
 const closeQrModal = document.getElementById("close-qr-modal"); 
 const qrCodeLink = document.getElementById("qr-code-link");
 const qrCodeImage = document.getElementById("qr-code-image");
-
-// --- Feature: Set Annotation Dimensions ---
-function setAnnotationDimensions() {
-    if (dimensionsTextElement && annotationButton) {
-        const dimensions = dimensionsTextElement.textContent;
-        annotationButton.setAttribute('data-label', dimensions);
-        console.log("Annotation dimensions set to:", dimensions);
-    } else {
-        console.warn("Could not set annotation dimensions: 'model-dimensions' p tag or annotation button not found.");
-    }
-}
-
-// Set annotation dimensions when the DOM is loaded
-document.addEventListener("DOMContentLoaded", setAnnotationDimensions);
-// Also set them when the model loads, in case there's a timing issue
-modelViewer.addEventListener("model-load", setAnnotationDimensions);
-
 
 // --- Feature: Reset 3D View ---
 if (resetButton) {

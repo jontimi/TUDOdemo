@@ -1,8 +1,9 @@
 // Get references to elements
 const modelViewer = document.getElementById("ar-model-viewer");
-// Removed dimensionsTextElement and annotationButton references
 const resetButton = document.getElementById("reset-view-button");
 const arQrButton = document.getElementById("ar-qr-button"); 
+const shareButton = document.getElementById("share-button"); // NEW: Get the Share button
+
 const qrModal = document.getElementById("qr-modal");       
 const closeQrModal = document.getElementById("close-qr-modal"); 
 const qrCodeLink = document.getElementById("qr-code-link");
@@ -74,3 +75,35 @@ if (qrModal) {
 modelViewer.addEventListener("model-load", generateQRCode);
 // Also try to generate on initial DOM content load for robustness
 document.addEventListener("DOMContentLoaded", generateQRCode);
+
+
+// --- NEW FEATURE: Share Button ---
+if (shareButton) {
+    shareButton.addEventListener("click", async () => {
+        if (navigator.share) { // Check if Web Share API is supported
+            try {
+                await navigator.share({
+                    title: document.title, // Uses the page title
+                    url: window.location.href // Uses the current page URL
+                });
+                console.log('Page shared successfully');
+            } catch (error) {
+                // User cancelled the share or an error occurred
+                console.error('Error sharing the page:', error);
+            }
+        } else {
+            console.warn('Web Share API not supported in this browser/context. Providing fallback.');
+            // Fallback for desktop or unsupported browsers: copy link to clipboard
+            // (Note: Clipboard API also requires secure context (HTTPS) or localhost)
+            try {
+                await navigator.clipboard.writeText(window.location.href);
+                alert("Share feature not supported. The link has been copied to your clipboard!");
+                console.log('Link copied to clipboard as fallback.');
+            } catch (err) {
+                // If clipboard API fails (e.g., not secure context, permission issues)
+                alert("Share feature not supported. You can manually copy the link: " + window.location.href);
+                console.error('Failed to copy link to clipboard:', err);
+            }
+        }
+    });
+}

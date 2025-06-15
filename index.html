@@ -3,53 +3,63 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Simple 3D AR Webpage Addon Template</title>
-    <link rel="stylesheet" href="style.css">
+    <title>3D Model Viewer</title>
     <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.4.0/model-viewer.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/qrious@4.0.2/dist/qrious.min.js"></script>
+    <style>
+        model-viewer {
+            width: 100%;
+            height: 400px;
+            position: relative;
+        }
+
+        .progress-bar {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 8px;
+            background-color: rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .progress-bar .update-bar {
+            background-color: rgba(0, 123, 255, 0.7);
+            height: 100%;
+            width: 0;
+            transition: width 0.2s ease-in-out;
+        }
+
+        .hotspot {
+            background-color: rgba(255, 255, 255, 0.8);
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            padding: 8px;
+            cursor: pointer;
+            position: absolute;
+            transform: translate(-50%, -50%);
+        }
+    </style>
 </head>
 <body>
 
-    <h1>Simple 3D AR Model Viewer Template</h1>
-    <p>This page demonstrates a single, embeddable 3D AR model viewer. This is the kind of code snippet you can provide to clients for their individual product pages.</p>
-    <p>Replace the `src` and `poster` attributes with your client's specific GLB file and preview image URLs.</p>
+    <model-viewer
+        src="models/HiveShelf90cm.glb"
+        ar
+        ar-modes="webxr scene-viewer quick-look"
+        camera-controls
+        poster="poster.webp"
+        shadow-intensity="1">
 
-    <p id="model-dimensions" class="dimensions-text">Dimensions: Loading...</p>
-
-    <div class="product-3d-viewer-container">
-        <model-viewer
-            id="ar-model-viewer"
-            src="models/HiveShelf90cm.glb"  
-            poster="poster.png"
-            alt="3D model of a Hive Shelf 90cm"
-            ar
-            ar-modes="webxr scene-viewer quick-look"
-            camera-controls
-            shadow-intensity="1"
-            exposure="1"
-            environment-image="neutral"
-            bounds="tight">
-        </model-viewer>
-    </div>
-    <div class="controls-below-viewer">
-        <button id="reset-view-button" class="action-button">Reset 3D View</button>
-
-        <button id="ar-qr-button" class="action-button">AR QR</button>
-    </div>
-
-    <div id="qr-modal" class="modal">
-        <div class="modal-content">
-            <span class="close-button" id="close-qr-modal">&times;</span>
-            <div class="qr-code-wrapper">
-                <a id="qr-code-link" href="#" target="_blank" title="Scan to view in AR">
-                    <img id="qr-code-image" src="" alt="QR Code">
-                </a>
-            </div>
-            <p>Scan this QR code with your phone to open the 3D model directly in Augmented Reality.</p>
+        <!-- Progress Bar -->
+        <div class="progress-bar" slot="progress-bar">
+            <div class="update-bar"></div>
         </div>
-    </div>
 
-    <script src="script.js"></script>
+        <!-- Hotspots -->
+        <button class="hotspot" slot="hotspot-1" data-position="1 1 1" data-normal="0 1 0">Hotspot 1</button>
+        <button class="hotspot" slot="hotspot-2" data-position="-1 1 -1" data-normal="0 1 0">Hotspot 2</button>
+
+    </model-viewer>
 
 </body>
 </html>

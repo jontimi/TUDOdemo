@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Client Page with 3D Button - DEMO</title>
+    <style>
+        body {
+            margin: 0; /* Remove default body margins */
+            background-color: #f0f0f0; /* Fallback background color for areas outside the content */
+        }
+
+        .page-container {
+            width: 100%; /* Take full width of its parent (body) */
+            max-width: 2326px; /* Keeps the central content at your image's width, creating blank sides on wider screens */
+            
+            /* Calculated padding-bottom for 2326x6684 image to maintain aspect ratio */
+            padding-bottom: 287.36%; /* (6684 / 2326) * 100% */
+            
+            background-image: url('client_page_background.jpg'); /* !!! IMPORTANT: Make sure this matches your image file name !!! */
+            background-size: contain; /* Ensures the whole image is visible within its container */
+            background-repeat: no-repeat;
+            background-position: top center; /* Aligns the image to the top center */
+            position: relative; /* Needed for positioning the button inside it */
+            margin: 0 auto; /* This centers the container horizontally on the page */
+        }
+
+        .my-3d-button {
+            padding: 15px 30px;
+            font-size: 20px;
+            background-color: #007bff; /* A nice blue, you can change this */
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            position: absolute; /* Positioned relative to .page-container */
+            
+            /* POSITIONING WITH FIXED PIXEL VALUES */
+            top: 1420px; /* Fixed distance from the top of the .page-container */
+            left: 1420px; /* Fixed distance from the left of the .page-container */
+            
+            z-index: 100; /* Ensures button is on top */
+        }
+
+        .my-3d-button:hover {
+            background-color: #0056b3;
+        }
+
+        /* --- Watermark Styles --- */
+        .watermark-text {
+            position: fixed; /* Stays in place even if you scroll */
+            top: 50%; /* Vertically center in the viewport */
+            transform: translateY(-50%) rotate(-90deg); /* Rotate for a vertical look */
+            font-size: 3em; /* Adjust text size as needed */
+            font-weight: bold;
+            color: rgba(0, 0, 0, 0.1); /* Semi-transparent black */
+            white-space: nowrap; /* Keep the text on a single line */
+            z-index: 99; /* Below the button, but above the background */
+            pointer-events: none; /* Prevents the watermark from interfering with clicks */
+            user-select: none; /* Prevents text selection */
+            text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.5); /* Optional: subtle shadow for readability */
+        }
+
+        .watermark-text.left {
+            left: 20px; /* Distance from the left edge of the browser window */
+        }
+
+        .watermark-text.right {
+            right: 20px; /* Distance from the right edge of the browser window */
+        }
+
+        /* --- MODAL POP-UP STYLES --- */
+        .modal-overlay {
+            display: none; /* Hidden by default */
+            position: fixed; /* Stay in place */
+            z-index: 1000; /* Sit on top of everything else */
+            left: 0;
+            top: 0;
+            width: 100%; /* Full width */
+            height: 100%; /* Full height */
+            background-color: rgba(0,0,0,0.7); /* Black background with transparency */
+            
+            /* These centering properties will be applied by JavaScript when display is set to 'flex' */
+            justify-content: center; /* Center horizontally */
+            align-items: center; /* Center vertically */
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            padding: 20px;
+            border: 1px solid #888;
+            border-radius: 8px; /* Slightly rounded corners */
+            position: relative; /* For the close button positioning */
+            
+            /* Responsive sizing for the modal content - DOUBLED SIZE */
+            width: 90%; /* Max width on smaller screens */
+            max-width: 2400px; /* UPDATED: Doubled max width */
+            height: 80%; /* Max height on smaller screens */
+            max-height: 1600px; /* UPDATED: Doubled max height */
+
+            display: flex; /* For controlling the iframe's layout */
+            flex-direction: column; /* Stack children vertically (close button then iframe) */
+        }
+
+        .modal-content iframe {
+            flex-grow: 1; /* Makes the iframe take up all available vertical space */
+            border: none;
+            width: 100%; /* Make iframe fill the modal content's width */
+            /* Height is handled by flex-grow: 1 */
+        }
+
+        .close-button {
+            color: #aaa;
+            font-size: 28px;
+            font-weight: bold;
+            align-self: flex-end; /* Pushes the close button to the top-right */
+            cursor: pointer;
+            line-height: 1; /* Adjusts vertical alignment of the 'x' */
+            margin-bottom: 10px; /* Space between close button and iframe */
+        }
+
+        .close-button:hover,
+        .close-button:focus {
+            color: #000;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="watermark-text left">DEMONSTRATIONS SITE</div>
+
+    <div class="watermark-text right">DEMONSTRATIONS SITE</div>
+
+    <div class="page-container">
+        <button class="my-3d-button">Launch 3D Viewer</button>
+    </div>
+
+    <div id="arModal" class="modal-overlay">
+        <div class="modal-content">
+            <span class="close-button">&times;</span> <iframe id="arIframe" src="" frameborder="0" allowfullscreen></iframe>
+        </div>
+    </div>
+
+    <script>
+        // Get the modal, iframe, and close button elements
+        var modal = document.getElementById('arModal');
+        var iframe = document.getElementById('arIframe');
+        var closeButton = document.querySelector('.close-button');
+
+        // When the "Launch 3D Viewer" button is clicked
+        document.querySelector('.my-3d-button').addEventListener('click', function() {
+            // UPDATED: Set the iframe's source to load your NEW 3D AR viewer repository
+            var arViewerURL = 'https://jontimi.github.io/3dModelARviewer/'; // THIS LINE IS CORRECTED
+            
+            iframe.src = arViewerURL;
+            
+            // Show the modal by changing its display style to flex
+            modal.style.display = 'flex';
+        });
+
+        // When the close button is clicked
+        closeButton.addEventListener('click', function() {
+            // Hide the modal
+            modal.style.display = 'none';
+            // Clear the iframe source to stop any video/audio playback and release resources
+            iframe.src = ''; 
+        });
+
+        // When the user clicks anywhere outside of the modal content, close it
+        window.addEventListener('click', function(event) {
+            if (event.target == modal) {
+                modal.style.display = 'none';
+                iframe.src = ''; 
+            }
+        });
+    </script>
+
+</body>
+</html>

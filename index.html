@@ -3,42 +3,55 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Simple Page</title>
-    <style>
-        body {
-            font-family: sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            margin: 0;
-            background-color: #f0f0f0;
-        }
-        .my-button {
-            padding: 15px 30px;
-            font-size: 20px;
-            background-color: #4CAF50; /* Green */
-            color: white;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-        .my-button:hover {
-            background-color: #45a049;
-        }
-    </style>
+    <title>Simple 3D AR Webpage Addon Template</title>
+    <link rel="stylesheet" href="style.css">
+    <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.4.0/model-viewer.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/qrious@4.0.2/dist/qrious.min.js"></script>
 </head>
 <body>
 
-    <button class="my-button">Click Me!</button>
+    <h1>Simple 3D AR Model Viewer Template</h1>
+    <p>This page demonstrates a single, embeddable 3D AR model viewer. This shows how the pop up 3d view window will look and function.</p>
+    
+    <p id="model-dimensions" class="dimensions-text">Dimensions: W 90cm x H 60cm x D 30cm</p>
 
-    <script>
-        // Optional: Add some JavaScript to make the button do something
-        document.querySelector('.my-button').addEventListener('click', function() {
-            alert('Button clicked!');
-        });
-    </script>
+    <div class="product-3d-viewer-container">
+        <model-viewer
+            id="ar-model-viewer"
+            src="models/HiveShelf90cm.glb"  
+            poster="poster.webp"  
+            alt="3D model of a Hive Shelf 90cm"
+            ar
+            ar-modes="webxr scene-viewer quick-look"
+            ar-scale="fixed"
+            camera-controls
+            shadow-intensity="1"
+            exposure="1"
+            environment-image="neutral"
+            bounds="tight">
+        </model-viewer>
+    </div>
+    <div class="controls-below-viewer">
+        <button id="reset-view-button" class="action-button">Reset 3D View</button>
+
+        <button id="ar-qr-button" class="action-button">AR QR</button>
+
+        <button id="share-button" class="action-button">Share</button>
+    </div>
+
+    <div id="qr-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-button" id="close-qr-modal">&times;</span>
+            <div class="qr-code-wrapper">
+                <a id="qr-code-link" href="#" target="_blank" title="Scan to view in AR">
+                    <img id="qr-code-image" src="" alt="QR Code">
+                </a>
+            </div>
+            <p>Scan this QR code with your phone to open the webpage. Then, tap the AR button on the 3D model to activate Augmented Reality.</p>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
 
 </body>
 </html>

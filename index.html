@@ -16,7 +16,6 @@
             max-width: 2326px; /* Your image's original width, centers content on wide screens */
             position: relative; /* Essential for positioning the absolute button inside */
             margin: 0 auto; /* This centers the container horizontally on the page */
-            /* No background-image here, as we're using an <img> tag now */
             background-color: white; /* Optional: background color for the container itself */
         }
 
@@ -43,8 +42,8 @@
             position: absolute;
             /* These percentages are relative to the .page-container, which now holds the scaling <img>.
                Adjust these values (especially 'top' and 'left') slightly to perfectly align with your product. */
-            top: 21.24%; /* Starting point calculated from your original 1420px / 6684px */
-            left: 65%; /* Starting point calculated from your original 1420px / 2326px */
+            top: 21.24%; /* Starting point calculated from 1420px / 6684px */
+            left: 65%; /* Your adjusted left position */
             transform: translate(-50%, -50%); /* Adjusts to perfectly center the button itself on the calculated point */
         }
 
@@ -96,17 +95,17 @@
             border-radius: 8px;
             position: relative;
             
-            width: 90vw; /* Responsive width for modal content */
-            height: 80vh; /* Responsive height for modal content */
-            max-width: 1200px;
-            max-height: 800px;
+            width: 90vw; /* 90% of viewport width */
+            height: 90vh; /* INCREASED HEIGHT: 90% of viewport height */
+            max-width: 1200px; /* Still cap it for very large screens */
+            max-height: 950px; /* INCREASED MAX-HEIGHT */
 
             display: flex;
             flex-direction: column;
         }
 
         .modal-content iframe {
-            flex-grow: 1;
+            flex-grow: 1; /* Ensures iframe takes up all available vertical space */
             border: none;
             width: 100%;
         }
@@ -118,7 +117,7 @@
             align-self: flex-end;
             cursor: pointer;
             line-height: 1;
-            margin-bottom: 10px;
+            margin-bottom: 10px; /* Space below close button */
         }
 
         .close-button:hover,
@@ -136,13 +135,13 @@
             }
 
             .my-3d-button {
-                font-size: 3vw; /* Larger button text for smaller screens */
-                padding: 2vw 4vw;
+                font-size: 2.5vw; /* Adjusted: Smaller button text for typical tablets/larger phones */
+                padding: 1.5vw 3vw; /* Adjusted: Smaller padding */
             }
 
             .modal-content {
                 width: 95vw;
-                height: 85vh;
+                height: 90vh; /* Maintain increased height for mobile */
             }
         }
 
@@ -152,8 +151,8 @@
             }
 
             .my-3d-button {
-                font-size: 4vw; /* Even larger button text for very small phones */
-                padding: 3vw 6vw;
+                font-size: 3.5vw; /* Adjusted: Smaller button text for very small phones */
+                padding: 2vw 4vw; /* Adjusted: Smaller padding */
             }
         }
     </style>
@@ -172,7 +171,8 @@
 
     <div id="arModal" class="modal-overlay">
         <div class="modal-content">
-            <span class="close-button">&times;</span> <iframe id="arIframe" src="" frameborder="0" allowfullscreen></iframe>
+            <span class="close-button">&times;</span> 
+            <iframe id="arIframe" src="" frameborder="0" allowfullscreen></iframe>
         </div>
     </div>
 

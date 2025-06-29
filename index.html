@@ -138,11 +138,12 @@
         // Get the modal, iframe, and close button elements
         var modal = document.getElementById('arModal');
         var iframe = document.getElementById('arIframe');
-        var closeButton = document.querySelector('.close-button'); // Uses querySelector which is robust
+        var closeButton = document.querySelector('.close-button');
 
         // When the "Launch 3D Viewer" button is clicked
         document.querySelector('.my-3d-button').addEventListener('click', function() {
-            var arViewerURL = 'https://jontimi.github.io/tudo-ar-mockup/'; // !!! IMPORTANT: Make sure this URL is correct !!!
+            // !!! IMPORTANT: The corrected URL for your 3D Model AR Viewer site !!!
+            var arViewerURL = 'https://jontimi.github.io/3dModelARviewer/'; 
             
             // Set the iframe's source to load your AR mockup
             iframe.src = arViewerURL;

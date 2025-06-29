@@ -129,9 +129,9 @@
         /* --- Media Queries for smaller screens (adjust button size and watermarks) --- */
         @media (max-width: 768px) {
             .watermark-text {
-                font-size: 2em; /* Make watermark smaller */
-                left: 10px;
-                right: 10px;
+                font-size: 1em; /* Adjusted: Much smaller watermark for tablets/larger phones */
+                left: -30px; /* Adjusted: Push further out to the side */
+                right: -30px; /* Adjusted: Push further out to the side */
             }
 
             .my-3d-button {
@@ -147,12 +147,9 @@
 
         @media (max-width: 480px) {
             .watermark-text {
-                font-size: 1.5em; /* Even smaller watermark */
-            }
-
-            .my-3d-button {
-                font-size: 2.5vw; /* Adjusted: Even smaller button text for very small phones */
-                padding: 1.5vw 3vw; /* Adjusted: Even smaller padding */
+                font-size: 0.8em; /* Adjusted: Even smaller watermark for very small phones */
+                left: -40px; /* Adjusted: Push even further out */
+                right: -40px; /* Adjusted: Push even further out */
             }
         }
     </style>

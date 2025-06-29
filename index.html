@@ -6,21 +6,23 @@
     <title>Client Page with 3D Button - DEMO</title>
     <style>
         body {
-            margin: 0;
-            background-color: #f0f0f0; /* Fallback background color */
+            margin: 0; /* Remove default body margins */
+            background-color: #f0f0f0; /* Fallback background color for areas outside the content */
         }
 
         .page-container {
-            width: 100%;
-            height: 100vh; /* Make it fill the viewport height */
-            overflow: hidden; /* Hide anything that goes outside its bounds */
-            position: relative;
-            margin: 0 auto; /* This centers the container horizontally */
-
+            width: 100%; /* Take full width of its parent (body) */
+            max-width: 2326px; /* Keeps the central content at your image's width, creating blank sides on wider screens */
+            
+            /* Calculated padding-bottom for 2326x6684 image to maintain aspect ratio */
+            padding-bottom: 287.36%; /* (6684 / 2326) * 100% */
+            
             background-image: url('client_page_background.jpg'); /* !!! IMPORTANT: Make sure this matches your image file name !!! */
-            background-size: cover; /* Ensures the whole image covers the container, possibly cropping edges */
+            background-size: contain; /* Ensures the whole image is visible within its container */
             background-repeat: no-repeat;
-            background-position: center center; /* Aligns the image to the center */
+            background-position: top center; /* Aligns the image to the top center */
+            position: relative; /* Needed for positioning the button inside it */
+            margin: 0 auto; /* This centers the container horizontally on the page */
         }
 
         .my-3d-button {
@@ -33,56 +35,50 @@
             cursor: pointer;
             transition: background-color 0.3s ease;
             position: absolute; /* Positioned relative to .page-container */
-
-            /* RESPONSIVE POSITIONING */
-            top: 50%; /* Position 50% from the top */
-            left: 50%; /* Position 50% from the left */
-            transform: translate(-50%, -50%); /* Adjusts to perfectly center the button */
-            white-space: nowrap; /* Prevents text from wrapping within the button */
-
-            z-index: 100;
+            top: 1420px; /* Specific pixel position from the top of the container */
+            left: 1420px; /* Specific pixel position from the left of the container */
+            z-index: 100; /* Ensures the button is above other elements if any overlap */
         }
 
         .my-3d-button:hover {
-            background-color: #0056b3;
+            background-color: #0056b3; /* Darker blue on hover */
         }
 
-        /* --- Watermark Styles --- */
+        /* Watermark Styles */
         .watermark-text {
-            position: fixed;
-            top: 50%;
-            transform: translateY(-50%) rotate(-90deg);
-            font-size: 3em; /* Use em for scalability */
+            position: fixed; /* Fixed position relative to the viewport */
+            top: 50%; /* Vertically center */
+            transform: translateY(-50%) rotate(-90deg); /* Move up by half its height, then rotate */
+            font-size: 3em; /* Large font size for watermark effect */
             font-weight: bold;
-            color: rgba(0, 0, 0, 0.1);
-            white-space: nowrap;
-            z-index: 99;
-            pointer-events: none;
-            user-select: none;
-            text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.5);
+            color: rgba(0, 0, 0, 0.1); /* Semi-transparent black */
+            white-space: nowrap; /* Prevent text from wrapping */
+            z-index: 99; /* Below the button and modal */
+            pointer-events: none; /* Allows clicks to pass through */
+            user-select: none; /* Prevents text selection */
+            text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.5); /* Subtle shadow for readability */
         }
 
         .watermark-text.left {
-            left: 20px;
+            left: 20px; /* Position from left */
         }
 
         .watermark-text.right {
-            right: 20px;
+            right: 20px; /* Position from right */
         }
 
-        /* --- MODAL POP-UP STYLES --- */
+        /* Modal Pop-up Styles */
         .modal-overlay {
             display: none; /* Hidden by default */
-            position: fixed;
-            z-index: 1000;
+            position: fixed; /* Fixed position relative to the viewport */
+            z-index: 1000; /* On top of everything else */
             left: 0;
             top: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0,0,0,0.7);
-
-            justify-content: center; /* Center horizontally */
-            align-items: center; /* Center vertically */
+            background-color: rgba(0,0,0,0.7); /* Semi-transparent black background */
+            justify-content: center; /* Center content horizontally */
+            align-items: center; /* Center content vertically */
         }
 
         .modal-content {
@@ -91,73 +87,34 @@
             border: 1px solid #888;
             border-radius: 8px;
             position: relative;
-
-            /* Responsive sizing for the modal content */
-            width: 90vw; /* 90% of viewport width */
-            height: 80vh; /* 80% of viewport height */
+            width: 80%; /* Width of the modal */
+            height: 80%; /* Height of the modal */
             max-width: 1200px; /* Max width for larger screens */
             max-height: 800px; /* Max height for larger screens */
-
-            display: flex;
-            flex-direction: column;
+            display: flex; /* Use flexbox for internal layout */
+            flex-direction: column; /* Stack items vertically */
         }
 
         .modal-content iframe {
             flex-grow: 1; /* Makes the iframe take up available vertical space */
-            border: none;
-            width: 100%;
+            border: none; /* No border for the iframe */
+            width: 100%; /* Full width of its parent */
         }
 
         .close-button {
             color: #aaa;
             font-size: 28px;
             font-weight: bold;
-            align-self: flex-end;
+            align-self: flex-end; /* Align to the end (right) of the flex container */
             cursor: pointer;
-            line-height: 1;
-            margin-bottom: 10px;
+            line-height: 1; /* Adjust line height for better vertical centering */
+            margin-bottom: 10px; /* Space below the close button */
         }
 
         .close-button:hover,
         .close-button:focus {
             color: #000;
             text-decoration: none;
-        }
-
-        /* --- Media Queries for Phone-Specific Adjustments --- */
-
-        /* For screens up to 768px wide (typical tablets and larger phones) */
-        @media (max-width: 768px) {
-            .watermark-text {
-                font-size: 2em; /* Make watermark smaller */
-                left: 10px;
-                right: 10px;
-            }
-
-            .my-3d-button {
-                font-size: 4vw; /* Adjust button font size relative to viewport */
-                padding: 2vw 4vw; /* Adjust button padding relative to viewport */
-                /* Position already centered, which works well for mobile */
-            }
-
-            .modal-content {
-                width: 95vw; /* Slightly wider modal on smaller screens */
-                height: 85vh; /* Slightly taller modal */
-            }
-        }
-
-        /* For very small phone screens (e.g., up to 480px wide) */
-        @media (max-width: 480px) {
-            .watermark-text {
-                font-size: 1.5em; /* Even smaller watermark */
-                /* Consider hiding one watermark for very narrow screens */
-                /* &.right { display: none; } */ /* Uncomment this if you want to hide the right watermark */
-            }
-
-            .my-3d-button {
-                font-size: 5vw; /* Make button text slightly larger for readability on very small phones */
-                padding: 3vw 6vw;
-            }
         }
     </style>
 </head>
@@ -178,43 +135,35 @@
     </div>
 
     <script>
-        // Ensure the script runs after the entire page (DOM) is loaded
-        document.addEventListener('DOMContentLoaded', function() {
-            // Get the modal, iframe, and close button elements
-            var modal = document.getElementById('arModal');
-            var iframe = document.getElementById('arIframe');
-            var closeButton = document.querySelector('.close-button'); // Uses querySelector which is robust
+        // Get the modal, iframe, and close button elements
+        var modal = document.getElementById('arModal');
+        var iframe = document.getElementById('arIframe');
+        var closeButton = document.querySelector('.close-button'); // Uses querySelector which is robust
 
-            // Check if elements exist before adding listeners to prevent errors
-            if (modal && iframe && closeButton) {
-                // When the "Launch 3D Viewer" button is clicked
-                document.querySelector('.my-3d-button').addEventListener('click', function() {
-                    var arViewerURL = 'https://jontimi.github.io/tudo-ar-mockup/';
+        // When the "Launch 3D Viewer" button is clicked
+        document.querySelector('.my-3d-button').addEventListener('click', function() {
+            var arViewerURL = 'https://jontimi.github.io/tudo-ar-mockup/'; // !!! IMPORTANT: Make sure this URL is correct !!!
+            
+            // Set the iframe's source to load your AR mockup
+            iframe.src = arViewerURL;
+            
+            // Show the modal by changing its display style to flex
+            modal.style.display = 'flex';
+        });
 
-                    // Set the iframe's source to load your AR mockup
-                    iframe.src = arViewerURL;
+        // When the close button is clicked
+        closeButton.addEventListener('click', function() {
+            // Hide the modal
+            modal.style.display = 'none';
+            // Clear the iframe source to stop any video/audio playback and release resources
+            iframe.src = ''; 
+        });
 
-                    // Show the modal by changing its display style to flex
-                    modal.style.display = 'flex';
-                });
-
-                // When the close button is clicked
-                closeButton.addEventListener('click', function() {
-                    // Hide the modal
-                    modal.style.display = 'none';
-                    // Clear the iframe source to stop any video/audio playback and release resources
-                    iframe.src = ''; 
-                });
-
-                // When the user clicks anywhere outside of the modal content, close it
-                window.addEventListener('click', function(event) {
-                    if (event.target == modal) {
-                        modal.style.display = 'none';
-                        iframe.src = ''; 
-                    }
-                });
-            } else {
-                console.error("One or more required elements for the AR modal were not found.");
+        // When the user clicks anywhere outside of the modal content, close it
+        window.addEventListener('click', function(event) {
+            if (event.target == modal) {
+                modal.style.display = 'none';
+                iframe.src = ''; 
             }
         });
     </script>

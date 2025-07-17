@@ -3,140 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Client Page with 3D Button - DEMO</title>
-    <style>
-        body {
-            margin: 0; /* Remove default body margins */
-            background-color: #f0f0f0; /* Fallback background color for areas outside the content */
-            overflow-x: hidden; /* Prevents horizontal scrollbar from appearing on smaller screens */
-        }
-
-        .page-container {
-            width: 100%; /* Take full width */
-            max-width: 2326px; /* Your image's original width, centers content on wide screens */
-            position: relative; /* Essential for positioning the absolute button inside */
-            margin: 0 auto; /* This centers the container horizontally on the page */
-            background-color: white; /* Optional: background color for the container itself */
-        }
-
-        .product-image {
-            width: 100%; /* Image fills the width of its container */
-            height: auto; /* Maintains aspect ratio */
-            display: block; /* Removes extra space below the image */
-        }
-
-        .my-3d-button {
-            /* Responsive padding and font-size based on viewport width */
-            padding: 0.8vw 0.8vw; 
-            font-size: 1vw;    
-            background-color: #4CAF50; /* Green */
-            color: white;
-            border: none;
-            border-radius: 0.5vw; /* Responsive border-radius */
-            cursor: pointer;
-            position: absolute; /* Position relative to .page-container */
-            left: 50%; /* Start at horizontal center */
-            transform: translateX(-50%); /* Adjust to truly center */
-            /* Vertical positioning adjustments (using percentages for responsiveness) */
-            top: 50%; /* Adjust as needed */
-            width: 10%; /* Responsive width */
-            box-shadow: 0 0.2vw 0.4vw rgba(0,0,0,0.2); /* Responsive shadow */
-            transition: background-color 0.3s ease;
-            white-space: nowrap; /* Prevents button text from wrapping */
-            z-index: 10; /* Ensure it's above other content if any */
-        }
-
-        .my-3d-button:hover {
-            background-color: #45a049; /* Darker green on hover */
-        }
-
-        /* The Modal (background) */
-        .modal {
-            display: none; /* Hidden by default */
-            position: fixed; /* Stay in place */
-            z-index: 1000; /* Sit on top */
-            left: 0;
-            top: 0;
-            width: 100%; /* Full width */
-            height: 100%; /* Full height */
-            overflow: hidden; /* Prevent scrolling within the modal background */
-            background-color: rgba(0,0,0,0.6); /* Black w/ opacity */
-            justify-content: center; /* Center horizontally */
-            align-items: center; /* Center vertically */
-            flex-direction: column; /* For vertical centering */
-        }
-
-        /* Modal Content/Box */
-        .modal-content-iframe {
-            background-color: #fefefe;
-            margin: auto;
-            padding: 0; /* Remove padding here, iframe handles its own */
-            border: 1px solid #888;
-            width: 95%; /* Responsive width */
-            max-width: 1000px; /* Maximum width for larger screens */
-            height: 90%; /* Responsive height */
-            max-height: 800px; /* Maximum height for larger screens */
-            border-radius: 8px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-            position: relative;
-            display: flex; /* Use flex to contain iframe */
-            flex-direction: column; /* Stack close button and iframe */
-        }
-
-        /* The Close Button for the modal */
-        .close-button {
-            color: #aaa;
-            align-self: flex-end; /* Align to the top-right within the flex container */
-            font-size: 28px;
-            font-weight: bold;
-            padding: 10px 15px; /* Add some padding to make it clickable */
-            cursor: pointer;
-            z-index: 1001; /* Ensure close button is above iframe */
-        }
-
-        .close-button:hover,
-        .close-button:focus {
-            color: black;
-            text-decoration: none;
-        }
-
-        /* Iframe styling */
-        #arIframe {
-            width: 100%;
-            flex-grow: 1; /* Make iframe fill available space */
-            border: none; /* Remove iframe default border */
-            border-bottom-left-radius: 8px; /* Match modal border-radius */
-            border-bottom-right-radius: 8px;
-        }
-
-        /* Media queries for responsiveness */
-        @media (max-width: 768px) {
-            .my-3d-button {
-                padding: 1.5vw 1.5vw;
-                font-size: 2vw;
-                width: 15%;
-            }
-            .modal-content-iframe {
-                width: 98%;
-                height: 95%;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .my-3d-button {
-                padding: 2vw 2vw;
-                font-size: 3vw;
-                width: 20%;
-                top: 55%; /* Adjust vertical position for very small screens */
-            }
-        }
-    </style>
+    <title>TUDO Product Page - DEMO</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
     <div class="page-container">
-        <img src="https://assets-global.website-files.com/64b5336e4f3a970e7e780447/64b533724f3a970e7e780517_landing%20page.webp" alt="Product Image" class="product-image">
-        
         <button class="my-3d-button">3D/AR</button>
     </div>
 
@@ -147,54 +19,7 @@
         </div>
     </div>
 
-    <script>
-        // Ensure the script runs after the entire page (DOM) is loaded
-        document.addEventListener('DOMContentLoaded', function() {
-            // Get the modal, iframe, and close button elements
-            var modal = document.getElementById('arModal');
-            var iframe = document.getElementById('arIframe');
-            var closeButton = document.querySelector('.close-button');
-
-            // Get a reference to your "3D\AR" button (the one with class 'my-3d-button')
-            var my3dButton = document.querySelector('.my-3d-button');
-
-            // Check if essential elements exist before adding listeners to prevent errors
-            if (modal && iframe && closeButton && my3dButton) {
-                // When the "3D\AR" button is clicked
-                my3dButton.addEventListener('click', function() {
-                    // ⭐ CRITICAL FIX: Ensure the '?brand=tudo' query parameter is included here ⭐
-                    var arViewerURL = 'https://jontimi.github.io/3dModelARviewer/?brand=tudo'; 
-                    
-                    // Set the iframe's source to load your AR mockup with the brand parameter
-                    iframe.src = arViewerURL;
-                    
-                    // Show the modal by changing its display style to flex
-                    modal.style.display = 'flex';
-                    console.log("3D/AR button clicked. Opening modal with TUDO branded viewer.");
-                });
-
-                // When the close button is clicked
-                closeButton.addEventListener('click', function() {
-                    // Hide the modal
-                    modal.style.display = 'none';
-                    // Clear the iframe source to stop any video/audio playback and release resources
-                    iframe.src = ''; 
-                    console.log("Modal closed by close button.");
-                });
-
-                // When the user clicks anywhere outside of the modal content, close it
-                window.addEventListener('click', function(event) {
-                    if (event.target == modal) {
-                        modal.style.display = 'none';
-                        iframe.src = ''; 
-                        console.log("Modal closed by outside click.");
-                    }
-                });
-            } else {
-                console.error("One or more required elements (modal, iframe, close button, or 3D/AR button) were not found.");
-            }
-        });
-    </script>
+    <script src="script.js"></script>
 
 </body>
 </html>

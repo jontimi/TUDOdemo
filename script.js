@@ -12,15 +12,15 @@ document.addEventListener('DOMContentLoaded', function() {
     if (modal && iframe && closeButton && my3dButton) {
         // When the "3D\AR" button is clicked
         my3dButton.addEventListener('click', function() {
-            // ⭐ CRITICAL CHANGE: Use hash fragment #brand=tudo ⭐
-            var arViewerURL = 'https://jontimi.github.io/3dModelARviewer/#brand=tudo'; 
+            // ⭐ CRITICAL FIX: Ensure the '?brand=tudo' query parameter is included here ⭐
+            var arViewerURL = 'https://jontimi.github.io/3dModelARviewer/?brand=tudo'; 
             
-            // Set the iframe's source to load your AR mockup with the brand parameter in the hash
+            // Set the iframe's source to load your AR mockup with the brand parameter
             iframe.src = arViewerURL;
             
             // Show the modal by changing its display style to flex
             modal.style.display = 'flex';
-            console.log("3D/AR button clicked. Opening modal with TUDO branded viewer using hash fragment.");
+            console.log("3D/AR button clicked. Opening modal with TUDO branded viewer.");
         });
 
         // When the close button is clicked

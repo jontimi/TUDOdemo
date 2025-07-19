@@ -1,89 +1,99 @@
-body {
+html, body {
+    height: 100%; 
     margin: 0;
+    padding: 0;
+}
+
+body {
     font-family: sans-serif;
-    background-color: #f0f0f0; /* Fallback background for areas outside the main container */
-    overflow-x: hidden; /* Prevent horizontal scroll */
+    background-color: #f0f0f0; 
+    overflow-x: hidden; 
+    overflow-y: auto;   
 }
 
 .page-container {
-    width: 100%;
-    /* Removed max-width to allow the background image to fill the entire screen width */
-    height: 3558px;   /* Height of the background image - IMPORTANT: Adjust if your image height changes! */
-    position: relative; /* Essential for positioning the button absolutely inside */
-    margin: 0 auto; /* This centers the container horizontally, though less visible when full width */
-
-    /* Set the background image */
-    background-image: url('client_page_background.jpg');
-    background-size: cover; /* Ensures the image covers the container, but will crop */
-    background-position: center top; /* Centers the image horizontally, aligns to top vertically */
-    background-repeat: no-repeat; /* Prevents the image from repeating */
+    width: 100vw; 
+    height: 0; 
+    /* This padding-top maintains the aspect ratio of your 'client_page_background.jpg' */
+    padding-top: 277.96875%; /* (3558px H / 1280px W) * 100% */
+    position: relative; /* Essential for positioning the button absolutely inside with percentages */
+    margin: 0 auto; 
+    /* Ensure this path is correct for your TUDO background image */
+    background-image: url('client_page_background.jpg'); 
+    background-size: contain; 
+    background-position: center top; 
+    background-repeat: no-repeat; 
 }
 
+/* Your "3D/AR" button styling */
 .my-3d-button {
-    /* KEY CHANGE: Positioning relative to the page-container using percentages */
-    position: absolute; /* Positions relative to the .page-container */
-    top: 18%;  /* Adjust this percentage to move the button up or down relative to the image */
-    left: 58%; /* Adjust this percentage to move the button left or right relative to the image */
+    position: absolute;
     
-    /* Appearance (retained pixel values for consistent size, but you could use vw for these too) */
-    padding: 10px 15px;
-    font-size: 16px;
+    /* ⭐ MAJOR CHANGE: Using percentages for position relative to .page-container ⭐ */
+    /* These percentages are derived from Neryatech's VW values and your image's aspect ratio. */
+    top: 13.85%;  
+    left: 58.3%;   /* (40vw / 100vw) * 100% */
+    
+    /* Button sizing and style, using calc() for responsiveness */
+    font-size: calc(0.8vw + 8px); 
+    padding: calc(0.5vw + 4px) calc(0.5vw + 8px); 
+    border-radius: 0.69vw; 
+    
     font-weight: bold;
-    background-color: #72be44; /* Green from the screenshot */
+    background-color: #72be44; /* Retained TUDO's green color */
     color: white;
     border: none;
-    border-radius: 5px;
     cursor: pointer;
     box-shadow: 0 2px 4px rgba(0,0,0,0.2);
     transition: background-color 0.3s ease;
-    z-index: 10; /* Ensure it's above the background */
-    white-space: nowrap; /* Prevents button text from wrapping */
+    z-index: 10;
+    white-space: nowrap;
 }
 
 .my-3d-button:hover {
-    background-color: #5a9a34; /* Darker green on hover */
+    background-color: #5a9a34; /* Retained TUDO's darker green on hover */
 }
 
-/* --- Modal Styles (for the 3D/AR viewer pop-up) --- */
+/* --- Modal Styles (no changes needed) --- */
 .modal {
-    display: none; /* Hidden by default */
-    position: fixed; /* Stay in place */
-    z-index: 1000; /* Sit on top */
+    display: none; 
+    position: fixed; 
+    z-index: 1000; 
     left: 0;
     top: 0;
-    width: 100%; /* Full width */
-    height: 100%; /* Full height */
-    overflow: hidden; /* Prevent scrolling within the modal background */
-    background-color: rgba(0,0,0,0.6); /* Black w/ opacity */
-    justify-content: center; /* Center horizontally */
-    align-items: center; /* Center vertically */
-    flex-direction: column; /* For vertical centering */
+    width: 100%; 
+    height: 100%;
+    overflow: hidden; 
+    background-color: rgba(0,0,0,0.6);
+    justify-content: center; 
+    align-items: center; 
+    flex-direction: column;
 }
 
 .modal-content-iframe {
     background-color: #fefefe;
     margin: auto;
-    padding: 0; /* Remove padding here, iframe handles its own */
+    padding: 0; 
     border: 1px solid #888;
-    width: 95%; /* Responsive width */
-    max-width: 1000px; /* Maximum width for larger screens */
-    height: 90%; /* Responsive height */
-    max-height: 800px; /* Maximum height for larger screens */
+    width: 95%; 
+    max-width: 1000px;
+    height: 90%; 
+    max-height: 800px;
     border-radius: 8px;
     box-shadow: 0 5px 15px rgba(0,0,0,0.3);
     position: relative;
-    display: flex; /* Use flex to contain iframe */
-    flex-direction: column; /* Stack close button and iframe */
+    display: flex; 
+    flex-direction: column; 
 }
 
 .close-button {
     color: #aaa;
-    align-self: flex-end; /* Align to the top-right within the flex container */
+    align-self: flex-end; 
     font-size: 28px;
     font-weight: bold;
-    padding: 10px 15px; /* Add some padding to make it clickable */
+    padding: 10px 15px; 
     cursor: pointer;
-    z-index: 1001; /* Ensure close button is above iframe */
+    z-index: 1001;
 }
 
 .close-button:hover,
@@ -94,28 +104,58 @@ body {
 
 #arIframe {
     width: 100%;
-    flex-grow: 1; /* Make iframe fill available space */
-    border: none; /* Remove iframe default border */
-    border-bottom-left-radius: 8px; /* Match modal border-radius */
+    flex-grow: 1; 
+    border: none; 
+    border-bottom-left-radius: 8px;
     border-bottom-right-radius: 8px;
 }
 
-/* Media queries for responsiveness of the modal and button within the page container */
+/* ⭐ MAJOR CHANGE: Using percentages for mobile positioning ⭐ */
+/* Media Query for Phone Portrait View (Regular/Non-Desktop View) */
 @media (max-width: 768px) {
     .my-3d-button {
-        padding: 8px 12px; /* Adjust as needed for smaller screens */
-        font-size: 14px;
-        /* Percentage positioning already helps here */
-    }
-    .modal-content-iframe {
-        width: 98%;
-        height: 95%;
+        /* Position and size for portrait mode phones, derived from Neryatech's VW values */
+        top: 13.43%;  /* (54vw / 277.96875vw) * 100% */
+        left: 59%;   /* (35vw / 100vw) * 100% */
+        font-size: calc(0.5vw + 6px); 
+        padding: calc(0.3vw + 3px) calc(0.3vw + 6px); 
     }
 }
 
+/* ⭐ MAJOR CHANGE: Using percentages for landscape positioning ⭐ */
+/* Media Query for Landscape Orientation on Mobile/Tablet */
+@media (orientation: landscape) and (max-height: 768px) {
+    .my-3d-button {
+        /* Position and size for landscape mode phones/small tablets, derived from Neryatech's VW values */
+        top: 13.82%;  /* (53.5vw / 277.96875vw) * 100% */
+        left: 58.5%;   /* (37vw / 100vw) * 100% */
+        /* You might want to adjust font-size/padding if they look off in landscape */
+        /* font-size: calc(0.7vw + 7px); */
+        /* padding: calc(0.4vw + 4px) calc(0.4vw + 8px); */
+    }
+}
+
+/* ⭐ MAJOR CHANGE: Using percentages for "Phone in Desktop View" positioning ⭐ */
+/* This targets devices with a small physical screen but a wide viewport (e.g., iPhone/Android in Desktop Site mode) */
+@media (min-width: 992px) and (max-device-width: 768px) {
+    .my-3d-button {
+        /* Position for phone in desktop view, derived from Neryatech's VW values */
+        top: 20.86%;  /* (58vw / 277.96875vw) * 100% */
+        left: 42%;   /* (42vw / 100vw) * 100% */
+        
+        /* You might also want to adjust size if it looks off */
+        /* font-size: calc(0.7vw + 7px); */
+        /* padding: calc(0.4vw + 4px) calc(0.4vw + 8px); */
+    }
+}
+
+/* Optional: Even narrower screens (e.g., iPhone SE, older Androids) */
 @media (max-width: 480px) {
     .my-3d-button {
-        padding: 6px 10px;
-        font-size: 12px;
+        /* This media query will apply only to very narrow screens, regardless of orientation. */
+        /* top: XX%; */
+        /* left: YY%; */
+        /* font-size: calc(0.4vw + 5px); */
+        /* padding: calc(0.2vw + 2px) calc(0.2vw + 4px); */
     }
 }

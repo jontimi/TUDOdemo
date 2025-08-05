@@ -1,5 +1,7 @@
 # Simple 3D AR Webpage Addon Template
 
+https://jontimi.github.io/TUDOdemo/
+
 This repository provides a basic template for embedding a single 3D model with Augmented Reality (AR) capabilities onto a webpage. It's designed to be a simple, copy-paste solution for product pages.
 
 ## Usage for Clients:
